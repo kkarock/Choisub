@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>호남고 2학년 학술제</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: 학교 축제 포스터처럼 밝고 힘차게, 안내는 또렷하고 정확하게
+IDEA: 강당 무대 — 조명이 비추는 발표대와 스크린
+PICTURE: 첫 화면의 무대 그림(스포트라이트, 발표대, 마이크, 슬라이드 스크린)
+COLOUR and TYPE: 코발트 블루 바탕, 흰 글씨, 코랄 포인트 / Black Han Sans 제목 + Noto Sans KR 본문
+LAYOUT: 첫 화면 무대 + 혜택 3가지 + 메뉴 3개, 각 메뉴는 해시로 여는 상세 안내
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#f4f6fc,#0e1222);--card:light-dark(#ffffff,#171c33);--ink:light-dark(#141a33,#eef1fb);--sub:light-dark(#4a5275,#aab2d4);
+--line:light-dark(#dfe4f3,#2a3155);--blue:#1f3fbf;--blue2:light-dark(#1f3fbf,#6f8cff);--deep:light-dark(#16288a,#0a1250);--coral:#ff6b4a;--sun:#ffd23f;--tint:light-dark(#e8edff,#1d2547)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans KR",system-ui,sans-serif;overflow-x:clip;word-break:keep-all}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,.disp{font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-weight:400;line-height:1.08;text-wrap:balance;margin:0}
+a{color:inherit}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+
+/* hero */
+.hero{background:var(--deep);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,4vw,56px);align-items:center}
+.kick{display:inline-block;background:var(--sun);color:#141a33;font-weight:900;padding:4px 12px;border-radius:999px;font-size:15px}
+.hero h1{font-size:clamp(38px,6vw,64px);margin:16px 0 10px}
+.hero h1 span{display:block;font-size:.55em;opacity:.85;margin-bottom:6px}
+.hero p.lead{font-size:clamp(18px,2.2vw,22px);font-weight:700;margin:0 0 22px}
+.perks{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.perks li{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:14px;padding:10px 16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.perks svg{width:22px;height:22px;flex:none}
+.stage{width:100%;height:auto;display:block}
+@media(prefers-reduced-motion:no-preference){.beam{animation:sway 6s ease-in-out infinite alternate;transform-origin:50% 0}}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+
+/* menu */
+.menu h2{font-size:clamp(26px,3.4vw,34px);margin-bottom:6px}
+.menu .note{color:var(--sub);margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px;transition:transform .15s,box-shadow .15s;min-height:220px}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(20,30,90,.14)}
+.card:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+.card .num{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-family:"Black Han Sans";font-size:24px}
+.card h3{font-size:21px;margin:4px 0 0;font-weight:900}
+.card p{margin:0;color:var(--sub);font-size:15px}
+.card .meta{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--tint);color:var(--blue2);white-space:nowrap}
+.card .go{font-weight:900;color:var(--blue2);font-size:15px}
+
+/* detail */
+.detail{display:none}
+body.in-detail .home{display:none}
+body.in-detail .detail{display:block}
+.dhead{background:var(--deep);color:#fff}
+.back{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700;padding:10px 14px;margin-left:-14px;border-radius:12px;min-height:44px;box-sizing:border-box}
+.back:hover{background:rgba(255,255,255,.12)}
+.back:focus-visible{outline:3px solid var(--sun)}
+.dhead h1{font-size:clamp(32px,5vw,52px);margin:8px 0 6px}
+.dhead .sub{opacity:.85;margin:0;font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-34px;position:relative}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 10px 24px rgba(20,30,90,.08)}
+.fact b{display:block;font-size:14px;color:var(--sub);font-weight:700;margin-bottom:4px}
+.fact span{font-size:18px;font-weight:900;line-height:1.4;display:block}
+.fact small{display:block;color:var(--sub);font-size:14px;margin-top:4px;line-height:1.5}
+.sec h2{font-size:clamp(24px,3vw,30px);margin-bottom:6px}
+.warn{background:light-dark(#fff3ef,#3a1d17);border:1px solid light-dark(#ffc9bb,#6b3227);color:light-dark(#8a2a14,#ffc2b3);border-radius:14px;padding:12px 16px;font-weight:700;margin:12px 0 22px}
+.total{display:flex;align-items:baseline;gap:10px;margin:0 0 16px;color:var(--sub)}
+.total b{font-family:"Black Han Sans";font-size:40px;color:var(--ink);font-weight:400;line-height:1}
+.areas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.area{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.area header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;color:#fff}
+.area header h3{margin:0;font-size:22px;font-family:"Black Han Sans";font-weight:400}
+.area header span{font-family:"Black Han Sans";font-size:26px;white-space:nowrap}
+.area header span small{font-family:"Noto Sans KR";font-size:14px;font-weight:700;margin-left:2px}
+.crit{padding:14px 20px;border-top:1px solid var(--line)}
+.crit:first-of-type{border-top:0}
+.crit h4{margin:0 0 8px;font-size:15px;color:var(--sub);font-weight:700}
+.ind{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;margin-bottom:8px}
+.ind:last-child{margin-bottom:0}
+.ind .nm{font-weight:700}
+.ind .pt{font-weight:900;white-space:nowrap;text-align:right}
+.bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--tint);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.cta{background:var(--blue);color:#fff;border-radius:24px;padding:clamp(22px,4vw,36px);display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;margin-top:8px}
+.cta h2{font-size:clamp(24px,3vw,32px)}
+.cta p{margin:6px 0 0;opacity:.9}
+.cta a{display:inline-flex;align-items:center;gap:8px;background:var(--sun);color:#141a33;text-decoration:none;font-weight:900;font-size:18px;padding:14px 24px;border-radius:14px;min-height:48px;white-space:nowrap}
+.cta a:hover{filter:brightness(1.06)}
+.url{display:block;margin-top:8px;font-size:14px;opacity:.85;overflow-wrap:anywhere}
+.othr{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.othr button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 16px;font-weight:700;min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center}
+.othr button:focus-visible{outline:3px solid var(--coral)}
+footer{color:var(--sub);font-size:14px;text-align:center;padding:24px 16px 40px}
+
+@media(max-width:860px){.cards{grid-template-columns:minmax(0,1fr)}.card{min-height:0}.areas{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.stage{max-width:460px;margin:0 auto}.facts{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+
+<section class="home">
+  <div class="hero band">
+    <div class="wrap">
+      <div>
+        <span class="kick">진로 발표 대회 참가자 모집</span>
+        <h1><span>호남고 2학년 학술제</span>진로 발표 대회</h1>
+        <p class="lead">호남고 2학년 학술제에 참가하세요!</p>
+        <ul class="perks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#ffd23f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M12 9v12M3 13h18M12 9c-2-4-6-4-6-1s6 1 6 1 6 2 6-1-4-3-6 1"/></svg>푸짐한 상품!</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#ffd23f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>생활기록부 기재!</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#ffd23f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1z"/><path d="M12 6v14"/></svg>학술집 등재!</li>
+        </ul>
+      </div>
+      <svg class="stage" viewBox="0 0 520 380" role="img" aria-label="조명이 비추는 발표 무대">
+        <defs>
+          <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c8" stop-opacity=".75"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient>
+          <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c2410c"/><stop offset="1" stop-color="#7c2d12"/></linearGradient>
+          <linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe6ff"/></linearGradient>
+          <linearGradient id="pod" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff8a6e"/><stop offset=".6" stop-color="#ff6b4a"/><stop offset="1" stop-color="#d94a2b"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="520" height="380" rx="26" fill="#0f1c66"/>
+        <path d="M0 26Q0 0 26 0H70V300H0Z" fill="#b91c1c"/><path d="M450 0H494Q520 0 520 26V300H450Z" fill="#b91c1c"/>
+        <path d="M70 0Q80 120 70 300M450 0Q440 120 450 300" stroke="#7f1d1d" stroke-width="6" fill="none"/>
+        <rect x="70" y="0" width="380" height="34" fill="#991b1b"/>
+        <path d="M70 34Q117 58 165 34Q212 58 260 34Q307 58 355 34Q402 58 450 34" fill="#b91c1c"/>
+        <rect x="110" y="62" width="300" height="160" rx="10" fill="url(#scr)"/>
+        <rect x="130" y="82" width="150" height="14" rx="7" fill="#1f3fbf"/>
+        <rect x="130" y="106" width="96" height="8" rx="4" fill="#9fb0ea"/>
+        <rect x="140" y="182" width="26" height="24" rx="3" fill="#ffd23f"/><rect x="176" y="160" width="26" height="46" rx="3" fill="#ff6b4a"/><rect x="212" y="138" width="26" height="68" rx="3" fill="#1f3fbf"/>
+        <circle cx="338" cy="164" r="38" fill="#e8edff"/><path d="M338 164V126A38 38 0 0 1 374 176Z" fill="#1f3fbf"/><path d="M338 164L374 176A38 38 0 0 1 320 198Z" fill="#ffd23f"/>
+        <path d="M0 300H520V354Q520 380 494 380H26Q0 380 0 354Z" fill="url(#floor)"/>
+        <rect x="0" y="296" width="520" height="8" fill="#fdba74"/>
+        <polygon class="beam" points="250,0 270,0 360,330 170,330" fill="url(#beam)"/>
+        <ellipse cx="265" cy="328" rx="100" ry="14" fill="#fff6c8" opacity=".45"/>
+        <path d="M222 236H308L300 328H230Z" fill="url(#pod)"/>
+        <rect x="214" y="228" width="102" height="14" rx="5" fill="#ffb199"/>
+        <circle cx="265" cy="278" r="16" fill="#ffd23f"/><path d="M258 278l5 5 9-11" stroke="#141a33" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M278 228Q284 206 296 198" stroke="#2b2f45" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="290" y="186" width="14" height="20" rx="7" transform="rotate(30 297 196)" fill="#2b2f45"/>
+        <g fill="#ffd23f"><path d="M96 252l4 9 9 4-9 4-4 9-4-9-9-4 9-4z"/><path d="M430 240l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="band menu">
+    <div class="wrap">
+      <h2>참가 부문을 고르세요</h2>
+      <p class="note">부문을 누르면 참가 조건, 발표 시간, 평가 항목과 신청서 링크가 나옵니다.</p>
+      <div class="cards" id="cards"></div>
+    </div>
+  </div>
+</section>
+
+<section class="detail" id="detail" aria-live="polite"></section>
+
+<footer>호남고등학교 2학년부 · 진로 발표 대회</footer>
+
+<script>
+{
+const FORM='https://forms.gle/StRShqBkn9fEyEBN6';
+const C={pres:'#1f3fbf',cont:'#ff6b4a'};
+const T=[
+ {id:'subject',n:1,color:'#1f3fbf',title:'교과연계 주제 탐구 발표',
+  blurb:'교과 연계 주제 탐구 보고서를 바탕으로 탐구 과정과 결과를 발표합니다.',
+  who:'교과 연계 주제 탐구 보고서 제출자만',whoNote:'보고서를 제출하지 않았다면 참가할 수 없습니다.',warn:true,
+  time:'3분 ~ 5분',
+  rubric:[
+   {area:'표현',pts:15,kind:'pres',crit:[
+    {c:'전달력',ind:[['음량/속도/발음 등',5]]},
+    {c:'상호작용',ind:[['아이컨택/제스쳐/유머 등',5]]},
+    {c:'시간 사용',ind:[['제한 시간 준수',5]]}]},
+   {area:'내용',pts:30,kind:'cont',crit:[
+    {c:'진로 주제 적합성',ind:[['동기-교과목연계성',5],['주제의 명확성',5]]},
+    {c:'완성도',ind:[['자료의 다양성',5],['내용의 깊이',5]]},
+    {c:'성찰 및 확장성',ind:[['배운 점',5],['진로 확장',5]]}]}]},
+ {id:'reading',n:2,color:'#e2532f',title:'독서 탐구 발표',
+  blurb:'읽은 책에서 출발한 탐구와 생각의 확장을 발표합니다.',
+  who:'누구나',whoNote:'독서감상문을 제출하지 않았어도 참가할 수 있습니다.',
+  time:'3분 ~ 5분',
+  rubric:[
+   {area:'표현',pts:15,kind:'pres',crit:[
+    {c:'전달력',ind:[['음량/속도/발음 등',5]]},
+    {c:'상호작용',ind:[['아이컨택/제스쳐/유머 등',5]]},
+    {c:'시간 사용',ind:[['제한 시간 준수',5]]}]},
+   {area:'내용',pts:30,kind:'cont',crit:[
+    {c:'동기',ind:[['동기의 명확성',5]]},
+    {c:'과정의 이해와 성찰',ind:[['핵심 내용 이해',5],['과정의 성찰',5]]},
+    {c:'연계',ind:[['도서 간 연계성',5]]},
+    {c:'후속 활동',ind:[['후속 활동 다양성',5],['탐구의 깊이',5]]}]}]},
+ {id:'lecture',n:3,color:'#0f8a6a',title:'학생 명사 특강',
+  blurb:'내가 전하고 싶은 메시지를 3분 동안 명사처럼 강연합니다.',
+  who:'담임 선생님 추천을 받은 학생 누구나',whoNote:'사제동행 토론과 3분 스피치 활약상을 바탕으로 담임 선생님의 추천이 필요합니다.',warn:true,
+  time:'3분',
+  rubric:[
+   {area:'표현',pts:30,kind:'pres',crit:[
+    {c:'전달력',ind:[['음량/속도/발음 등',10]]},
+    {c:'상호작용',ind:[['아이컨택/제스쳐/유머 등',10]]},
+    {c:'시간 사용',ind:[['제한 시간 준수',10]]}]},
+   {area:'내용',pts:20,kind:'cont',crit:[
+    {c:'주제의 공익성',ind:[['주제의 공익성',10]]},
+    {c:'완성도',ind:[['논리적 타당성',5],['주장의 설득력',5]]}]}]}
+];
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const sum=t=>t.rubric.reduce((a,r)=>a+r.pts,0);
+
+document.getElementById('cards').innerHTML=T.map(t=>`
+ <button class="card" data-go="${t.id}" aria-label="${esc(t.title)} 자세히 보기">
+  <span class="num" style="background:${t.color}">${t.n}</span>
+  <h3>${esc(t.title)}</h3>
+  <p>${esc(t.blurb)}</p>
+  <span class="meta"><span class="chip">발표 ${esc(t.time)}</span><span class="chip">참가: ${esc(t.who)}</span></span>
+  <span class="go">자세히 보기 →</span>
+ </button>`).join('');
+
+const det=document.getElementById('detail');
+function render(t){
+ const max=Math.max(...t.rubric.flatMap(r=>r.crit.flatMap(c=>c.ind.map(i=>i[1]))));
+ det.innerHTML=`
+ <div class="dhead band" style="padding-bottom:64px">
+  <div class="wrap">
+   <button class="back" data-go="">← 처음으로</button>
+   <h1>${t.n}. ${esc(t.title)}</h1>
+   <p class="sub">${esc(t.blurb)}</p>
+  </div>
+ </div>
+ <div class="band" style="padding-top:0">
+  <div class="wrap">
+   <div class="facts">
+    <div class="fact"><b>참가 자격</b><span>${esc(t.who)}</span><small>${esc(t.whoNote)}</small></div>
+    <div class="fact"><b>발표 시간</b><span>${esc(t.time)}</span><small>제한 시간 준수도 평가 항목입니다.</small></div>
+    <div class="fact"><b>준비물</b><span>발표용 PPT, 의지와 용기</span></div>
+   </div>
+  </div>
+ </div>
+ <div class="band sec" style="padding-top:0">
+  <div class="wrap">
+   <h2>평가 항목</h2>
+   <div class="warn">평가 항목에 맞게 PPT와 발표를 준비하세요.</div>
+   <p class="total"><b>${sum(t)}점</b> 만점 · ${t.rubric.map(r=>`${esc(r.area)} ${r.pts}점`).join(' + ')}</p>
+   <div class="areas">${t.rubric.map(r=>`
+    <article class="area">
+     <header style="background:${C[r.kind]}"><h3>${esc(r.area)}</h3><span>${r.pts}<small>점</small></span></header>
+     ${r.crit.map(c=>`<div class="crit"><h4>${esc(c.c)}</h4>${c.ind.map(i=>`
+      <div class="ind"><span class="nm">${esc(i[0])}</span><span class="pt">${i[1]}점</span>
+      <span class="bar"><i style="width:${i[1]/max*100}%;background:${C[r.kind]}"></i></span></div>`).join('')}</div>`).join('')}
+    </article>`).join('')}
+   </div>
+  </div>
+ </div>
+ <div class="band" style="padding-top:0">
+  <div class="wrap">
+   <div class="cta">
+    <div><h2>참가 신청하기</h2><p>아래 버튼을 눌러 구글 폼으로 신청하세요.</p><span class="url">${FORM}</span></div>
+    <a href="${FORM}" target="_blank" rel="noopener">구글 폼 열기 →</a>
+   </div>
+   <div class="othr">${T.filter(o=>o.id!==t.id).map(o=>`<button data-go="${o.id}">${o.n}. ${esc(o.title)} 보기</button>`).join('')}<button data-go="">처음으로</button></div>
+  </div>
+ </div>`;
+}
+function route(){
+ const id=location.hash.slice(1);const t=T.find(x=>x.id===id);
+ if(t){render(t);document.body.classList.add('in-detail');document.title=t.title+' | 호남고 학술제'}
+ else{document.body.classList.remove('in-detail');det.innerHTML='';document.title='호남고 2학년 학술제'}
+ window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-go]');if(!b)return;
+ const id=b.dataset.go;
+ if(location.hash.slice(1)===id)route();else location.hash=id;
+});
+window.addEventListener('hashchange',route);
+route();
+}
+</script>
+</body>
+</html>
